@@ -39,8 +39,9 @@ public:
 	}
 
 	virtual void setSpeed(float speed, float accel);
-	// スピード習得関数
-	float getSpeed() { return speed* accel; }
+	// スピード, アクセル習得関数
+	float getSpeed() { return speed; }
+	float getAccel() { return accel; }
 
 	~Vehicle() {}
 private:
@@ -54,15 +55,12 @@ private:
 class Car : public Vehicle
 {
 public:
-	Car()
-	{
-
-	}
+	Car(){}
 
 	Vehicle vehicle;
 
 	void Speed(float speed, float accel);
-
+	void Update();
 	~Car() {}
 private:
 
@@ -97,4 +95,22 @@ void Vehicle::setSpeed(float speed, float accel)
 void Car::Speed(float speed, float accel)
 {
 	vehicle.setSpeed(speed, accel);
+}
+
+/// <summary>
+/// アップデート処理関数
+/// </summary>
+void Car::Update()
+{
+	float stopNum = 90;
+	float speed;
+	
+	speed = vehicle.getSpeed();
+
+	if (stopNum > speed)
+	{
+		speed++;
+	}
+	else
+		return;
 }
