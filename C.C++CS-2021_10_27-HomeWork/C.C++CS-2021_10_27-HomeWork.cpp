@@ -12,51 +12,89 @@ public:
 		y = 0;
 		z = 0;
 	}
+
+	float getX() { return x; }
+	float getY() { return y; }
+	float getZ() { return z; }
+
 	virtual void Update() {}
+
+	~Object() {}
 private:
-	int x;
-	int y;
-	int z;
+	float x;
+	float y;
+	float z;
 };
 
 /// <summary>
 /// Vehicle(乗り物)クラス
 /// </summary>
-class Vehicle : Object
+class Vehicle : public Object
 {
 public:
-	Vehicle() {}
-private:
-	/// <summary>
-	/// 移動速度上昇関数
-	/// </summary>
-	class SpeedUp
+	Vehicle()
 	{
-	public:
-		SpeedUp() {}
-	private:
-		int speed;
-		int axcel;
-	};
+		speed = 0;
+		accel = 0;
+	}
+
+	virtual void setSpeed(float speed, float accel);
+	// スピード習得関数
+	float getSpeed() { return speed* accel; }
+
+	~Vehicle() {}
+private:
+	float speed;
+	float accel;
 };
 
 /// <summary>
 /// Car(車)クラス、Vehicle継承
 /// </summary>
-class Car : Vehicle
+class Car : public Vehicle
 {
 public:
-	Car() {}
+	Car()
+	{
 
-	void SetSpeed();
+	}
+
+	Vehicle vehicle;
+
+	void Speed(float speed, float accel);
+
+	~Car() {}
 private:
 
 };
 
-/// <summary>
-/// スピード設定用関数
-/// </summary>
-void Car::SetSpeed()
+int main()
 {
+	Car car;
+	// Updateを呼ぶ回数
+	const int roopNum = 100;
 
+	car.setSpeed(2.2f, 1.2f);
+
+	for (int i = 0; i < roopNum; i++)
+	{
+		car.Update();
+	}
+}
+
+/// <summary>
+/// 移動設定関数
+/// </summary>
+void Vehicle::setSpeed(float speed, float accel)
+{
+	this->speed = speed;
+	this->accel = accel;
+}
+
+/// <summary>
+/// Carの速度設定関数
+/// </summary>
+void Car::Speed(float speed, float accel)
+{
+	vehicle.setSpeed(speed, accel);
 }
